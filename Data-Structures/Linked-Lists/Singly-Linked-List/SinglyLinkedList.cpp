@@ -31,7 +31,7 @@ public:
         else return false;
     }
 
-    int length(){
+    int getLength(){
         return len;
     }
 
@@ -66,7 +66,7 @@ public:
             Node<T> *temp = new Node<T>();
             int position = 0;
             temp = this->head;
-            cout << "Length : " << this->length() << endl;
+            cout << "Length : " << this->getLength() << endl;
             while(temp){
                 cout << "Position : " << position << " >> ";
                 if(temp == this->head){
@@ -93,16 +93,76 @@ public:
 
     void insertBeg(T data){
         Node<T> *temp = new Node<T>(data);
-        if (this->head){
-            temp->next = this->head;
-        }
-        else {
-            temp->next = nullptr;
-        }
+        temp->next = this->head;
         this->head = temp;
         this->len++;
 
         return;
+    }
+
+    void insertEnd(T data){
+        Node<T> *temp = new Node<T>(data);
+        if(this->head){
+            Node<T> *curr = new Node<T>();
+            curr = this->head;
+            while(curr->next){
+                curr = curr->next;
+            }
+            curr->next = temp;
+            temp->next = nullptr;
+        }
+        else{
+            this->head = temp;
+            temp->next = nullptr;
+        }
+
+        this->len++;
+        return;
+    }
+
+    void insertAtPos(int position, T data){
+        if((position < 0) or (position > this->getLength())) {
+            cout << "Incorrect operation. Position out of bounds" << endl;
+        }
+        else{
+            Node<T> *curr = this->head;
+            if(curr){
+                Node<T> *prev = nullptr;
+                for(int i = 0; i < position; i++){
+                    prev = curr;
+                    curr = curr->next;
+                }
+                Node<T> *temp = new Node<T>(data);
+                temp->next = curr;
+                if(position != 0){
+                    prev->next = temp;
+                }
+                else{
+                    this->head = temp;
+                }
+
+            }
+            else{
+                this->head = new Node<T>(data);
+                this->head->next = nullptr;
+            }
+            this->len++;
+        }
+        return;
+    }
+
+    bool search(T data){
+        Node<T> *curr = this->head;
+        if(curr){
+            while(curr){
+                if(curr->data == data) return true;
+                curr = curr->next;
+            }
+            return false;
+        }
+        else{
+            return false;
+        }
     }
 
 };
@@ -113,6 +173,14 @@ int main(){
     SinglyLinkedList<int> list;
     list.insertBeg(2);
     list.insertBeg(3);
+    list.insertEnd(4);
+    list.insertEnd(5);
     list.showDebug();
+    list.insertAtPos(4, 6);
+    list.insertAtPos(0, 7);
+    list.insertAtPos(7, 7);
+    list.showDebug();
+    cout << list.search(4) << endl;
+    cout << list.search(9) << endl;
     return 0;
 }
