@@ -36,25 +36,58 @@ public:
     }
 
     void show(){
-        cout << "------------------------------------------" << endl;
+        cout << "--------------- NORMAL VIEW -------------" << endl;
         if(this->head){
             Node<T> *temp = new Node<T>();
             temp = this->head;
             while(temp){
-                cout << temp->data << endl;
+                if(temp == this->head){
+                    cout << temp->data;
+                }
+                else{
+                    cout << " -> " << temp->data;
+                }
+                
                 temp = temp->next;
             }
         }
         else{
-            cout << "The list is empty" << endl;
+            cout << "The list is empty";
         }
-        cout << "------------------------------------------" << endl;
+        cout << endl << "------------------------------------------" << endl;
 
         return;
     }
 
 
     void showDebug(){
+        cout << "------------- DEBUG VIEW ----------------" << endl;
+        if(this->head){
+            Node<T> *temp = new Node<T>();
+            int position = 0;
+            temp = this->head;
+            cout << "Length : " << this->length() << endl;
+            while(temp){
+                cout << "Position : " << position << " >> ";
+                if(temp == this->head){
+                    cout << "| Head Address: " << temp << " | Data: " << temp->data << " | Next Address: ";
+                    if(temp->next == nullptr) cout << "NULL |";
+                    else cout << temp->next << " |";
+                }
+                else{
+                    cout << "| Current Address: " << temp << " | Data: " << temp->data << " | Next Address: ";
+                    if(temp->next == nullptr) cout << "NULL |";
+                    else cout << temp->next << " |";
+                }
+                cout << endl;
+                position++;
+                temp = temp->next;
+            }
+        }
+        else{
+            cout << "The list is empty" << endl;
+        }
+        cout << "------------------------------------------" << endl;       
         return;
     }
 
@@ -67,6 +100,7 @@ public:
             temp->next = nullptr;
         }
         this->head = temp;
+        this->len++;
 
         return;
     }
@@ -77,9 +111,8 @@ public:
 int main(){
 
     SinglyLinkedList<int> list;
-    list.show();
     list.insertBeg(2);
     list.insertBeg(3);
-    list.show();
+    list.showDebug();
     return 0;
 }
