@@ -165,6 +165,93 @@ public:
         }
     }
 
+    void deleteEnd(){
+        Node<T> *curr = this->head;
+        if(curr){
+            Node<T> *prev = nullptr;
+            while(curr->next){
+                prev = curr;
+                curr = curr->next;
+            }
+
+            if(curr == this->head){
+                delete curr;
+                this->head = nullptr;
+            }
+            else{
+                prev->next = nullptr;
+                delete curr;
+                curr = nullptr;
+            }
+
+            this->len--;
+            
+        }
+        else{
+            cout << "Invalid operation. List empty" << endl;
+        }
+
+        return;
+    }
+
+    void deleteBeg(){
+        Node<T> *curr = this->head;
+        if(curr){
+            Node<T> *prev = curr;
+            curr = curr->next;
+
+            if(curr == this->head){
+                delete curr;
+                this->head = nullptr;
+            }
+            else{
+                this->head = curr;
+                prev->next = nullptr;
+                delete prev;
+                prev = nullptr;
+            }
+
+            this->len--;
+            
+        }
+        else{
+            cout << "Invalid operation. List empty" << endl;
+        }
+
+        return;
+    }
+
+    void deleteAtPos(int position){
+        if((position < 0) or (position >= this->getLength())){
+            cout << "Invalid operation. Position out of bounds" << endl;
+        }
+        else{
+            Node<T> *prev, *curr, *next;
+            curr = this->head;
+            prev = nullptr;
+            for(int i = 0; i < position; i++){
+                next = curr->next;
+                prev = curr;
+                curr = next;
+            }
+            
+            next = curr->next;
+            if(prev){
+                prev->next = next;
+            }
+            else{
+                this->head = curr->next;
+            }
+            curr->next = nullptr;
+            delete curr;
+            curr = nullptr;
+            
+            this->len--;
+        }
+
+        return;
+    }
+
 };
 
 
@@ -182,5 +269,17 @@ int main(){
     list.showDebug();
     cout << list.search(4) << endl;
     cout << list.search(9) << endl;
+    list.deleteEnd();
+    list.deleteBeg();
+    list.showDebug();
+    list.deleteAtPos(5);
+    list.deleteAtPos(2);
+    list.showDebug();
+    list.insertEnd(9);
+    list.insertEnd(8);
+    list.showDebug();
+    list.deleteAtPos(0);
+    list.deleteAtPos(3);
+    list.showDebug();
     return 0;
 }
