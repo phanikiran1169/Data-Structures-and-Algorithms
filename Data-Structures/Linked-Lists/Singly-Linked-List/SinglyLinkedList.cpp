@@ -17,11 +17,10 @@ template<typename T>
 class SinglyLinkedList{
 public:
 
-    SinglyLinkedList() : head(nullptr), tail(nullptr), len(0) {}
+    SinglyLinkedList() : head(nullptr), len(0) {}
 
 private:
     Node<T> *head;
-    Node<T> *tail;
     int len;
 
 public:
@@ -35,11 +34,14 @@ public:
         return len;
     }
 
+    Node<T>* getHead(){
+        return this->head;
+    }
+
     void show(){
         cout << "--------------- NORMAL VIEW -------------" << endl;
         if(this->head){
-            Node<T> *temp = new Node<T>();
-            temp = this->head;
+            Node<T> *temp = this->head;
             while(temp){
                 if(temp == this->head){
                     cout << temp->data;
@@ -63,9 +65,8 @@ public:
     void showDebug(){
         cout << "------------- DEBUG VIEW ----------------" << endl;
         if(this->head){
-            Node<T> *temp = new Node<T>();
+            Node<T> *temp = this->head;
             int position = 0;
-            temp = this->head;
             cout << "Length : " << this->getLength() << endl;
             while(temp){
                 cout << "Position : " << position << " >> ";
@@ -252,6 +253,35 @@ public:
         return;
     }
 
+    void reverseList(){
+        Node<T> *prev, *curr, *next;
+        prev = nullptr;
+        curr = this->head;
+        while(curr){
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        this->head = prev;
+        return;
+    }
+
+    void reverseList(Node<T> *head){
+        if(head == nullptr) return;
+        else if(head->next == nullptr) {
+            this->head = head;
+            return;
+        }
+        else{
+            Node<T> *next = head->next;
+            reverseList(next);
+            next->next = head;
+            head->next = NULL;
+        }
+        return;
+    }
+
 };
 
 
@@ -280,6 +310,10 @@ int main(){
     list.showDebug();
     list.deleteAtPos(0);
     list.deleteAtPos(3);
+    list.showDebug();
+    list.reverseList();
+    list.showDebug();
+    list.reverseList(list.getHead());
     list.showDebug();
     return 0;
 }
