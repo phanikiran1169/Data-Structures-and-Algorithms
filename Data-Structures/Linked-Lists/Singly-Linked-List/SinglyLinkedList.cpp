@@ -10,6 +10,8 @@ public:
 
     Node() : next(nullptr), data() {}
     Node(T data) : next(nullptr), data(data) {}
+   
+    ~Node(){}
 
 };
 
@@ -18,6 +20,18 @@ class SinglyLinkedList{
 public:
 
     SinglyLinkedList() : head(nullptr), len(0) {}
+
+    ~SinglyLinkedList(){
+        Node<T> *curr = this->head;
+        Node<T> *next;
+        while(curr){
+            next = curr->next;
+            delete curr;
+            curr = next;
+        }
+        this->head = nullptr;
+        this->len = 0;
+    }
 
 private:
     Node<T> *head;
