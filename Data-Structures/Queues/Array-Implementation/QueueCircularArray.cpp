@@ -80,6 +80,25 @@ public:
             return this->queueFrame[front];
     }
 
+    void show(){
+        cout << "------------------------------------------" << endl; 
+        if(this->isEmpty()){
+            cout << "Queue is empty" << endl;
+        }
+
+        else if(this->front <= this->back){
+            for(int i = this->front; i <= this->back; i++){
+                cout << "| " << this->queueFrame[i] << " ";
+            }
+            cout << "|" << endl;
+        }
+        else{
+
+            // for(int i = this->front)
+        }
+        cout << "------------------------------------------" << endl; 
+    }
+
 
 };
 
@@ -88,6 +107,7 @@ int main(){
     queue.enqueue(1);
     queue.enqueue(3);
     cout << queue.getLength() << endl;
+    queue.show();
 
     return 0;
 }
